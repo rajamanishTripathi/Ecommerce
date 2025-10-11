@@ -1,5 +1,8 @@
 from django.db import models
 
+class Collection(models.Model):
+    title = models.CharField(max_length=255)
+
 class Product(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -8,6 +11,10 @@ class Product(models.Model):
     last_update = models.DateTimeField(auto_now=True) 
     # for first time when product add time will update with auto_now_add
     # so used auto_now
+    collection = models.ForeignKey(Collection,on_delete=models.PROTECT)
+    # in cases if parent class in not up then  Collection class can be 'Collection'
+    #  collection = models.ForeignKey('Collection',on_delete=models.)
+    # for deletion we use PROTECT , if we delete collection then we dont accidently delete product in collection
 
 class Customer(models.Model):
     MEMBERSHIP_BRONZE = 'B'
@@ -38,8 +45,23 @@ class Order(models.Model):
     ]
     placed_at = models.DateField(auto_now_add=True)
     payment_status = models.CharField(max_length=1,choices=PAYMENT_STATUS_CHOICES)
+    customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.PROTECT)
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)
+    quantity = models.PositiveSmallIntegerField()
+    unit_price = models.DecimalField(max_digits=6, decimal_places=2)
 
 class Address(models.Model):
     street = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
-    customer = models.OneToOneField(Customer, on_delete=models.CASCADE, primary_key=TRUE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+
+class Cart(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveSmallIntegerField()

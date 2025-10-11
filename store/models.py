@@ -6,6 +6,8 @@ class Promotion(models.Model):
 
 class Collection(models.Model):
     title = models.CharField(max_length=255)
+    featured_product = models.ForeignKey('Product', on_delete=models.SET_NULL , null=True, related_name='+')
+    # to not create reverse relationship i have added  related_name='+'
 
 class Product(models.Model):
     title = models.CharField(max_length=255)

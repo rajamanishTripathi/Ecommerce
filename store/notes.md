@@ -9,3 +9,7 @@ A Primary Key
 It must be unique (no two rows can have the same value).
 It cannot be NULL.
 Each table can have only one primary key, but it can consist of multiple columns (composite key).
+
+if venv doesnot start
+then close terminal and select from view -> command platte again
+ & "C:/Users/RAJA MANISH/.virtualenvs/Project-F36nJwST/Scripts/Activate.ps1"

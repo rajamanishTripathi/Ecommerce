@@ -30,3 +30,7 @@ we can do it by git
 git log --oneline
 then to go to previous commit 
 git reset --hard HEAD~1
+
+
+creating empty migrations
+python manage.py makemigrations store --empty

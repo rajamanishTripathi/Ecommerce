@@ -34,3 +34,14 @@ git reset --hard HEAD~1
 
 creating empty migrations
 python manage.py makemigrations store --empty
+
+creating & deleting migration
+ migrations.RunSQL(""""
+            INSERT INTO store_collection (title)
+            VALUES ('collection1')
+        ""","""
+            DELETE FROM store_collection
+            WHERE title = 'collection1'
+        """)
+
+then run 

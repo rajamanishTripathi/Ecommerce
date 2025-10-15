@@ -5,5 +5,10 @@
     {% else %}
     <h1>Hello World</h1>
     {% endif %}
+    <ul>
+      {% for prod in product %}
+      <li>{{ prod.title }}</li>
+      {% endfor %}
+    </ul>
   </body>
 </html>

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q,F
-from store.models import Product
+from store.models import Product,OrderItem
 
 
 def say_hello(request):
@@ -26,7 +26,10 @@ def say_hello(request):
     # product = Product.objects.latest('unit_price')[0] desc
     # product = Product.objects.values('id','title','collection__title')
     #  instead of product instances we get dictonary object 
-    product = Product.objects.values_list('id','title','collection__title')
+    # product = Product.objects.values_list('id','title','collection__title')
     #  instead of product instances we get tuple object 
 
-    return render(request, 'hello.html', {'name': 'Mosh','product':list(product)})
+
+    queryset = Product.objects.filter(id__in=OrderItem.objects.values('product_id').distinct()).order_by('title')
+
+    return render(request, 'hello.html', {'name': 'Mosh','product':list(queryset)})

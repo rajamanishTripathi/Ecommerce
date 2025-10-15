@@ -14,6 +14,9 @@ if venv doesnot start
 then close terminal and select from view -> command platte again
  & "C:/Users/RAJA MANISH/.virtualenvs/Project-F36nJwST/Scripts/Activate.ps1"
 
+ or run 
+ pipenv shell
+
 
  after making db changes i run 
  python .\manage.py makemigrations
@@ -45,3 +48,14 @@ creating & deleting migration
         """)
 
 then run 
+python manage.py migrate   
+to apply migration
+then to downgrade run
+python manage.py migrate store 0004
+
+New setup
+
+pipenv install
+pipenv shell
+& "C:/Users/RAJA MANISH/.virtualenvs/Project-F36nJwST/Scripts/Activate.ps1"
+python manage.py migrate

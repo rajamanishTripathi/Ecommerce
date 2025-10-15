@@ -24,5 +24,9 @@ def say_hello(request):
     # product = Product.objects.order_by('unit_price')[0]
     #  product = Product.objects.earliest('unit_price') asc
     # product = Product.objects.latest('unit_price')[0] desc
+    # product = Product.objects.values('id','title','collection__title')
+    #  instead of product instances we get dictonary object 
+    product = Product.objects.values_list('id','title','collection__title')
+    #  instead of product instances we get tuple object 
 
-    return render(request, 'hello.html', {'name': 'Mosh','product':list(queryset)})
+    return render(request, 'hello.html', {'name': 'Mosh','product':list(product)})

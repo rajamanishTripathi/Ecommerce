@@ -17,6 +17,12 @@ def say_hello(request):
     # queryset = Product.objects.filter(Q(inventory__lt =10) & Q(unit_price__lt = 20))  AND opertion
     #  queryset = Product.objects.filter(Q(inventory__lt =10) | ~Q(unit_price__lt = 20))  OR opertions with NOT operator
     # Product : inventory = unit_price
-    queryset = Product.objects.filter(inventory=F('unit_price')) 
+    # queryset = Product.objects.filter(inventory=F('unit_price')) 
+    # queryset = Product.objects.order_by('title')  ASC
+    # queryset = Product.objects.order_by('-title')  DESC
+    # queryset = Product.objects.order_by('unit_price', '-title').reverse()
+    # product = Product.objects.order_by('unit_price')[0]
+    #  product = Product.objects.earliest('unit_price') asc
+    # product = Product.objects.latest('unit_price')[0] desc
 
     return render(request, 'hello.html', {'name': 'Mosh','product':list(queryset)})

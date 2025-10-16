@@ -28,8 +28,9 @@ def say_hello(request):
     #  instead of product instances we get dictonary object 
     # product = Product.objects.values_list('id','title','collection__title')
     #  instead of product instances we get tuple object 
+    # queryset = Product.objects.filter(id__in=OrderItem.objects.values('product_id').distinct()).order_by('title')
 
-
-    queryset = Product.objects.filter(id__in=OrderItem.objects.values('product_id').distinct()).order_by('title')
+    # queryset = Product.objects.only('id','title') costly queryset
+    # queryset = Product.objects.defer('description')  it will defer loading of certain query
 
     return render(request, 'hello.html', {'name': 'Mosh','product':list(queryset)})

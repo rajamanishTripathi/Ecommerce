@@ -32,5 +32,10 @@ def say_hello(request):
 
     # queryset = Product.objects.only('id','title') costly queryset
     # queryset = Product.objects.defer('description')  it will defer loading of certain query
+    # queryset = Product.objects.all()   loading  takes time
+    # queryset = Product.objects.select_related('collection').all()  
+    # this will preload so takes less time. instead of 1000 query there is 3 query
+    # select_related if product has (1) collection
+    
 
     return render(request, 'hello.html', {'name': 'Mosh','product':list(queryset)})

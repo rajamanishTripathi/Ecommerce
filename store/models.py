@@ -59,7 +59,9 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.PROTECT)
+    # orderitem_set convention for reverse relation to order table OR
+    #  order = models.ForeignKey(Order, on_delete=models.PROTECT, related_name='items' ) and create similiar for order table
+    order = models.ForeignKey(Order, on_delete=models.PROTECT )
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     quantity = models.PositiveSmallIntegerField()
     unit_price = models.DecimalField(max_digits=6, decimal_places=2)

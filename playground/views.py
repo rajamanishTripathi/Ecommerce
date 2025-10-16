@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models.aggregates import Max,Count,Min, Avg, Sum
 from django.db.models import Q,F
 from store.models import Product,OrderItem,Order
 
@@ -42,5 +43,10 @@ def say_hello(request):
     # queryset = Product.objects.prefetch_related('promotions').select_related('collection').all()
     # queryset = Order.objects.select_related('customer').prefetch_related('orderitem_set__product').order_by('-placed_at')[0:5]
     # orderitem_set convention for reverse relation to order table
+    # get last five orders with customer and products included
 
-    return render(request, 'hello.html', {'name': 'Mosh','product':list(queryset)})
+    # result = Product.objects.aggregate(Count('id')) 
+    # result = Product.objects.aggregate(count = Count('id'), minPrice = Min('unit_price'))
+    result = Product.objects.filter(collection__id= 1).aggregate(count = Count('id'), minPrice = Min('unit_price'))
+
+    return render(request, 'hello.html', {'name': 'Mosh','result':result})

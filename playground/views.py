@@ -36,6 +36,10 @@ def say_hello(request):
     # queryset = Product.objects.select_related('collection').all()  
     # this will preload so takes less time. instead of 1000 query there is 3 query
     # select_related if product has (1) collection
+    # queryset = Product.objects.select_related('collection_someOtherField').all()
+    # prefetch_related if other end relationship has many objects (n)
+    queryset = Product.objects.prefetch_related('promotions').all()
+    queryset = Product.objects.prefetch_related('promotions').select_related('collection').all()
     
 
     return render(request, 'hello.html', {'name': 'Mosh','product':list(queryset)})

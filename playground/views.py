@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models.aggregates import Max,Count,Min, Avg, Sum
-from django.db.models import Q,F,Func,Count
+from django.db.models.aggregates import Max, Count, Min, Avg, Sum
+from django.db.models import Q, F, Func, Count, ExpressionWrapper, DecimalField
 from django.db.models import Value
 from django.db.models.functions import Concat
-from store.models import Product,OrderItem,Order,Customer
+from store.models import Product, OrderItem, Order, Customer
 
 
 def say_hello(request):
@@ -58,9 +58,13 @@ def say_hello(request):
     #     full_name = Func(F('first_name'),Value('  '),F('last_name'), function='CONCAT')
     # )
 
-    queryset = Customer.objects.annotate(
-        order_count = Count('order')
-    )
+    # queryset = Customer.objects.annotate(
+    #     order_count = Count('order')
+    # )
     # reverse relationship is not working for customer that is order_set. so order entered
+    discounted_price = ExpressionWrapper(F('unit_price')*0.8, output_field=DecimalField())
+    queryset = Product.objects.annotate(
+        discounted_price=discounted_price
+    )
 
-    return render(request, 'hello.html', {'name': 'Mosh','result':list(queryset)})
+    return render(request, 'hello.html', {'name': 'Mosh', 'result': list(queryset)})

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.aggregates import Max,Count,Min, Avg, Sum
-from django.db.models import Q,F,Func
+from django.db.models import Q,F,Func,Count
 from django.db.models import Value
 from django.db.models.functions import Concat
 from store.models import Product,OrderItem,Order,Customer
@@ -59,8 +59,8 @@ def say_hello(request):
     # )
 
     queryset = Customer.objects.annotate(
-        #concat
-        full_name = Concat('first_name',Value('  '),'last_name')
+        order_count = Count('order')
     )
+    # reverse relationship is not working for customer that is order_set. so order entered
 
     return render(request, 'hello.html', {'name': 'Mosh','result':list(queryset)})

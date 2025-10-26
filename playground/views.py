@@ -5,7 +5,8 @@ from tags.models import TaggedItem
 
 def say_hello(request):
     content_type = ContentType.objects.get_for_model(Product)
-
+    # getting tags for product 
+    # generic relationship is created
     queryset = TaggedItem.objects \
         .select_related('tag') \
         .filter(

@@ -4,7 +4,7 @@ from django.db import transaction,connection
 
 def say_hello(request):
 
-    queryset = Product.objects.raw('SELECT * FROM store_product')
+    # queryset = Product.objects.raw('SELECT * FROM store_product')
 
     # cursor = connection.cursor()
     # cursor.execute('SELECT * FROM store_product')

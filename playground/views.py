@@ -1,9 +1,15 @@
 from django.shortcuts import render
-from django.contrib.contenttypes.models import ContentType
-from store.models import Product
-from tags.models import TaggedItem
+from store.models import Product,Order,OrderItem,Customer,Collection
 
 def say_hello(request):
-    TaggedItem.objects.get_tags_for(Product,1)
+    collection = Collection()
+    collection.title = 'Video Game'
+    collection.featured_product = Product(pk=1) 
+    # or Product(id=1)
+    collection.save()
+
+    #      ------------------OR-------------------
+    # collection = Collection.objects.create(title='a',featured_product_id=1)
+
 
     return render(request, 'hello.html', {'name': 'Mosh', 'result': list(queryset)})

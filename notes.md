@@ -59,3 +59,9 @@ pipenv install
 pipenv shell
 & "C:/Users/RAJA MANISH/.virtualenvs/Project-F36nJwST/Scripts/Activate.ps1"
 python manage.py migrate
+
+
+
+After changes in DB run below commands in order
+python manage.py makemigrations
+python manage.py migrate

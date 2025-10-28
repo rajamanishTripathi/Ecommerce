@@ -23,6 +23,7 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {
         'slug': ['title']
     }
+    search_fields = ['order']
     actions= ['clear_inventory']
     list_display = ['title','unit_price','inventory_status','collection_title']
     list_editable = ['unit_price']
@@ -65,12 +66,19 @@ class CustomerAdmin(admin.ModelAdmin):
         return super().get_queryset(request).annotate(
             order_count = Count('order')
         )
+    
+class OrderItemInline(admin.TabularInline):
+    model = models.OrderItem
+    autocomplete_fields = ['product']
+    extra = 0
 
 @admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id','placed_at','customer']
     ordering =  ['id']
+    inlines = [OrderItemInline]
     list_per_page = 10
+    autocomplete_fields = ['customer']
 
 @admin.register(models.Collection)
 class CollectionAmin(admin.ModelAdmin):

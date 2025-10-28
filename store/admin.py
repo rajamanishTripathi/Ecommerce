@@ -23,11 +23,19 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(models.Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ['first_name','membership']
+    list_display = ['first_name','membership','order_count']
     list_editable = ['membership']
     list_per_page = 10
     ordering =  ['first_name']
     search_fields=['first_name__istartswith']
+
+    def order_count(self,order):
+        return order.order_count
+    
+    def get_queryset(self, request):
+        return super().get_queryset(request).annotate(
+            order_count = Count('order')
+        )
 
 @admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):

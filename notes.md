@@ -62,6 +62,15 @@ python manage.py migrate
 
 
 
-After changes in DB run below commands in order
+After changes in DB tables run below commands in order
 python manage.py makemigrations
 python manage.py migrate
+
+
+After changing complete or creating new Db
+pipenv shell
+python manage.py makemigrations
+python manage.py migrate
+then import db
+then run  python manage.py runserver
+then create user  python manage.py createsuperuser

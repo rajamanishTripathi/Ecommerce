@@ -24,7 +24,7 @@ class CollectionSerializer(serializers.Serializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id','title','unit_price','collection']
+        fields = ['id','title','description','slug','inventory','unit_price','collection']
         # fields ='__all__'     all fields exposed via api
     # price = serializers.DecimalField(max_digits=6,decimal_places=2, source='unit_price')
 #     price_with_tax = serializers.SerializerMethodField(method_name='calculate_tax')
@@ -40,3 +40,17 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def calculate_tax(self, product:Product):
         return product.unit_price* Decimal(1.1)
+
+# #   overriding create method
+#     def create(self, validated_data):
+#         # unpacking validated data
+#         product = Product(**validated_data)
+#         product.other = 1
+#         product.save()
+#         return product
+    
+#     # overring update method
+#     def update(self, instance, validated_data):
+#         instance.unit_price = validated_data.get('unit_price')
+#         instance.save()
+#         return instance

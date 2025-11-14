@@ -10,12 +10,13 @@ from .models import OrderItem, Product, Reviews
 from django.db.models import Count
 from django_filters.rest_framework import DjangoFilterBackend
 from .serializers import ProductSerializer,CollectionSerializer,Collection, ReviewSerializer
+from .filters import ProductFilters
 
 class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['collection_id']
+    filterset_class = ProductFilters
 
     # def get_queryset(self):
     #     queryset = Product.objects.all()
